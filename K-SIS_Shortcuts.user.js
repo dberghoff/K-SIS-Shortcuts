@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         New Userscript
+// @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  try to take over the world!
-// @author       You
+// @description  
+// @author       Dan Berghoff
 // @match        https://www.tampermonkey.net/index.php?version=4.19.0&ext=dhdg&updated=true
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
 // @grant        none

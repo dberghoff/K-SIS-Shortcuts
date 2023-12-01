@@ -4,6 +4,7 @@
 // @version      0.1
 // @description  
 // @author       Dan Berghoff
+// @include      https://us.ksisstandard.kumon.com/*
 // @match        https://www.tampermonkey.net/index.php?version=4.19.0&ext=dhdg&updated=true
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
 // @grant        none

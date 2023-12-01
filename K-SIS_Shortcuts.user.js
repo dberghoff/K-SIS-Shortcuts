@@ -115,7 +115,7 @@
 
                 // Date Range = Alt + A
                 // Date Range & Save = Alt + Shift + A
-                case 68:
+                case 65:
                     document.getElementById("btnToolbarDateRange").click();
                     if (event.altKey) {
                         document.getElementById("btnToolbarSave").click();

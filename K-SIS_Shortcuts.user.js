@@ -15,9 +15,6 @@
 (function() {
     'use strict';0;
 
-    // Listen for keyboard events
-    document.addEventListener("keydown", onKeydown, true);
-
     // Check if user has focus on form input
     var formFocus = false;
     document.addEventListener("focusin", (event) => {
@@ -27,15 +24,73 @@
         formFocus = false;
     });
 
-    // Shorcut actions
-    function onKeydown(event) {
-        if (!formFocus) {
+    // Listen for keyboard events
+    document.addEventListener("keydown", (event) => {
+        if (!formFocus) { // Do nothing if user is editing a form
+
+            // Set the best button to use to go back from current page
+            let url = document.location.toString();
+            let backBtn;
+            url = url.slice(37, (url.indexOf("/",38) >= 0) ? url.indexOf("/",38):100);
+            switch(url) {
+                case "scorecardentry":
+                    backBtn = "btnToolbarStudentList";
+                    break;
+                case "progressgoal":
+                    backBtn = "btnToolbarStudentList";
+                    break;
+                case "progresshistory":
+                    backBtn = "btnToolbarStudentList";
+                    break;
+                case "student":
+                    backBtn = "btnToolbarStudentList";
+                    break;
+                case "studentcommentlist":
+                    backBtn = "btnToolbarBack";
+                    break;
+                case "studyplanlevel":
+                    backBtn = "btnToolbarBack";
+                    break;
+                case "scorecardplan":
+                    backBtn = "btnToolbarBack";
+                    break;
+                default:
+                    backBtn = "btnToolbarHome";
+                    break;
+            }
+
+            // Shorcut actions
             switch(event.keyCode) {
+
+                //=============== Global ===============//
+
+                // Save = Alt + S
+                // Save & Back = Alt + Shift + S
+                case 83:
+                    if (event.altKey) {
+                        document.getElementById("btnToolbarSave").click();
+                        if (event.shiftKey) {
+                            setTimeout(function() {
+                                document.getElementById(backBtn).click();
+                                location.reload(); // TODO: Find a better solution to fix focus issues after using this shortcut
+                            }, 1000);
+                        }
+                    }
+                    break;
+
+                // Back = Esc
+                case 27:
+                    document.getElementById(backBtn).click();
+                    break;
+
+
+
+                //============ Student List ============//
 
                 // Filter Menu = F
                 case 70:
                     document.getElementById("btnToolbarFilterSort").click();
-                    setTimeout(function() {
+                    setTimeout(function() { // Focus first name input field
                         const nameInput = document.getElementById("filterFirstName");
                         nameInput.focus();
                         nameInput.select();
@@ -47,7 +102,19 @@
                     document.getElementById("btnToolbarScoreCardEntry").click();
                     break;
 
+                // Progress Goal
+                // Progress History
+                // Student Profile
+                // Student Comments
+                // Level Study Plan
+                // Score Card Plan
+
+
+
+                //========== Score Card Entry ==========//
+
                 // Date Range = Alt + A
+                // Date Range & Save = Alt + Shift + A
                 case 68:
                     document.getElementById("btnToolbarDateRange").click();
                     if (event.altKey) {
@@ -56,25 +123,6 @@
                             setTimeout(function() {
                                 document.getElementById("btnToolbarDateRange").click();
                             }, 100);
-                        }
-                    }
-                    break;
-
-                // Back = Esc
-                case 27:
-                    document.getElementById("btnToolbarStudentList").click();
-                    break;
-
-                // Save = Alt + S
-                // Save & Back = Alt + Shift + S
-                case 83:
-                    if (event.altKey) {
-                        document.getElementById("btnToolbarSave").click();
-                        if (event.shiftKey) {
-                            setTimeout(function() {
-                                document.getElementById("btnToolbarStudentList").click();
-                                location.reload(); // TODO: Find a better solution to fix focus issues after using this shortcut
-                            }, 1000);
                         }
                     }
                     break;
@@ -96,9 +144,9 @@
                         setTimeout(function() {
                             document.getElementById("btnToolbarPrevStudent").click();
                         }, 1000);
-                        break;
                     }
+                    break;
             }
         }
-    }
+    })
 })();

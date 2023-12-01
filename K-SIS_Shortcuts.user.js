@@ -2,12 +2,13 @@
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  
+// @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @include      https://us.ksisstandard.kumon.com/*
 // @match        https://www.tampermonkey.net/index.php?version=4.19.0&ext=dhdg&updated=true
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
-// @grant        none
+// @icon         https://us.ksisstandard.kumon.com/favicon.ico
+// @run-at       document-body
+// @grant        window.focus
 // ==/UserScript==
 
 (function() {
@@ -21,7 +22,9 @@
                 const nameInput = document.getElementById("filterFirstName");
                 setTimeout(nameInput.focus(),200);
                 setTimeout(nameInput.select(),200);
+                window.focus();
             }, 500);
+            window.focus();
         }
 
         // Ctrl + Shift + V = Score Card Entry

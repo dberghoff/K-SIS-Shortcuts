@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.1.4
+// @version      0.2.1
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
-// @include      https://us.ksisstandard.kumon.com/*
+// @match        https://us.ksisstandard.kumon.com/*
 // @match        https://www.tampermonkey.net/index.php?version=4.19.0&ext=dhdg&updated=true
 // @icon         https://us.ksisstandard.kumon.com/favicon.ico
 // @run-at       document-body
@@ -15,62 +15,75 @@
 (function() {
     'use strict';0;
 
-    function onKeydown(evt) {
-        // Ctrl + Shift + F = Filter Menu
-        if (evt.ctrlKey && evt.shiftKey && evt.keyCode == 70) {
-            setTimeout(document.getElementById("btnToolbarFilterSort").click(),500);
-            setTimeout(function() {
-                const nameInput = document.getElementById("filterFirstName");
-                setTimeout(nameInput.focus(),100);
-                setTimeout(nameInput.select(),200);
-                setTimeout(nameInput.focus(),300);
-            }, 500);
-        }
+    // Listen for keyboard events
+    document.addEventListener("keydown", onKeydown, true);
 
-        // Ctrl + Shift + V = Score Card Entry
-        if (evt.ctrlKey && evt.shiftKey && evt.keyCode == 86) {
-            document.getElementById("btnToolbarScoreCardEntry").click();
-        }
+    // Check if user has focus on form input
+    var formFocus = false;
+    document.addEventListener("focusin", (event) => {
+        formFocus = document.getElementById(event.target.id).className.includes("form-control");
+    });
+    document.addEventListener("focusout", () => {
+        formFocus = false;
+    });
 
-        // D = Date Range
-        if (evt.keyCode == 68) {
-            document.getElementById("btnToolbarDateRange").click();
-        }
+    // Shorcut actions
+    function onKeydown(event) {
+        if (!formFocus) {
+            switch(event.keyCode) {
+                // Filter Menu = F
+                case 70:
+                    document.getElementById("btnToolbarFilterSort").click();
+                    setTimeout(function() {
+                        const nameInput = document.getElementById("filterFirstName");
+                        nameInput.focus();
+                        nameInput.select();
+                    }, 500);
+                    break;
 
-        // Esc = Back
-        //if (evt.keyCode == 27) {
-        //    document.getElementById("btnToolbarBack").click();
-        //}
+                // Score Card Entry = R
+                case 82:
+                    document.getElementById("btnToolbarScoreCardEntry").click();
+                    break;
 
-        // S = Save
-        if (evt.keyCode == 83) {
-            document.getElementById("btnToolbarSave").click();
-        }
+                // Date Range = D
+                case 68:
+                    document.getElementById("btnToolbarDateRange").click();
+                    break;
 
-        // S = Save and Back
-        if (evt.shiftKey && evt.shiftKey && evt.keyCode == 83) {
-            document.getElementById("btnToolbarSave").click();
-            setTimeout(function() {
-                document.getElementById("btnToolbarBack").click();
-            }, 1000);
-        }
+                // Back = Esc
+                case 27:
+                    document.getElementById("btnToolbarStudentList").click();
+                    break;
 
-        // Alt + RightArrow = Next Student
-        if (evt.altKey && evt.keyCode == 39) {
-            document.getElementById("btnToolbarSave").click();
-            setTimeout(function() {
-                document.getElementById("btnToolbarNextStudent").click();
-            }, 1000);
-        }
+                // Save = S
+                // Save & Back = Shift + S
+                case 83:
+                    document.getElementById("btnToolbarSave").click();
+                    if (event.shiftKey) {
+                        setTimeout(function() {
+                            document.getElementById("btnToolbarStudentList").click();
+                        }, 1000);
+                        break;
+                    }
+                    break;
 
-        // Alt + LeftArrow = Previous Student
-        if (evt.altKey && evt.keyCode == 37) {
-            document.getElementById("btnToolbarSave").click();
-            setTimeout(function() {
-                document.getElementById("btnToolbarPrevStudent").click();
-            }, 1000);
+                // Next Student = >
+                case 188:
+                    document.getElementById("btnToolbarSave").click();
+                    setTimeout(function() {
+                        document.getElementById("btnToolbarNextStudent").click();
+                    }, 1000);
+                    break;
+
+                // Previous Student = <
+                case 190:
+                    document.getElementById("btnToolbarSave").click();
+                    setTimeout(function() {
+                        document.getElementById("btnToolbarPrevStudent").click();
+                    }, 1000);
+                    break;
+            }
         }
     }
-
-    document.addEventListener('keydown', onKeydown, true);
 })();

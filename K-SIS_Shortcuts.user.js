@@ -6,7 +6,6 @@
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
 // @match        https://us.ksisstandard.kumon.com/*
-// @match        https://www.tampermonkey.net/index.php?version=4.19.0&ext=dhdg&updated=true
 // @icon         https://us.ksisstandard.kumon.com/favicon.ico
 // @run-at       document-body
 // @grant        none
@@ -64,10 +63,11 @@
 
                 //=============== Global ===============//
 
-                // Save = Alt + S
-                // Save & Back = Alt + Shift + S
+                // Save = Crtl + S
+                // Save & Back = Ctrl + Shift + S
                 case 83:
-                    if (event.altKey) {
+                    if (event.ctrlKey) {
+                        event.preventDefault();
                         document.getElementById("btnToolbarSave").click();
                         if (event.shiftKey) {
                             setTimeout(function() {
@@ -87,15 +87,18 @@
 
                 //============ Student List ============//
 
-                // Filter Menu = F
+                // Filter Menu = Ctrl + F
                 case 70:
-                    document.getElementById("btnToolbarFilterSort").click();
-                    setTimeout(function() { // Focus first name input field
-                        const nameInput = document.getElementById("filterFirstName");
-                        nameInput.focus();
-                        nameInput.select();
-                    }, 500);
-                    break;
+                    if (event.ctrlKey) {
+                        event.preventDefault();
+                        document.getElementById("btnToolbarFilterSort").click();
+                        setTimeout(function() { // Focus first name input field
+                            const nameInput = document.getElementById("filterFirstName");
+                            nameInput.focus();
+                            nameInput.select();
+                        }, 500);
+                        break;
+                    }
 
                 // Score Card Entry = R
                 case 82:
@@ -113,15 +116,15 @@
 
                 //========== Score Card Entry ==========//
 
-                // Date Range = Alt + A
-                // Date Range & Save = Alt + Shift + A
-                case 65:
-                    document.getElementById("btnToolbarDateRange").click();
-                    if (event.altKey) {
-                        document.getElementById("btnToolbarSave").click();
+                // Date Range = Ctrl + D
+                // Date Range & Save = Ctrl + Shift + D
+                case 68:
+                    if (event.ctrlKey) {
+                        event.preventDefault();
+                        document.getElementById("btnToolbarDateRange").click();
                         if (event.shiftKey) {
                             setTimeout(function() {
-                                document.getElementById("btnToolbarDateRange").click();
+                                document.getElementById("btnToolbarSave").click();
                             }, 100);
                         }
                     }

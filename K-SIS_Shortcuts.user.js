@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.2.1
+// @version      0.3.1
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
@@ -21,7 +21,7 @@
     // Check if user has focus on form input
     var formFocus = false;
     document.addEventListener("focusin", (event) => {
-        formFocus = document.getElementById(event.target.id).className.includes("form-control");
+        formFocus = document.getElementById(event.target.id).className.includes("form-control"); // TODO: Get focus of scorecard & catch errors w/ clicking on elements w/o className
     });
     document.addEventListener("focusout", () => {
         formFocus = false;
@@ -31,6 +31,7 @@
     function onKeydown(event) {
         if (!formFocus) {
             switch(event.keyCode) {
+
                 // Filter Menu = F
                 case 70:
                     document.getElementById("btnToolbarFilterSort").click();
@@ -46,9 +47,17 @@
                     document.getElementById("btnToolbarScoreCardEntry").click();
                     break;
 
-                // Date Range = D
+                // Date Range = Alt + A
                 case 68:
                     document.getElementById("btnToolbarDateRange").click();
+                    if (event.altKey) {
+                        document.getElementById("btnToolbarSave").click();
+                        if (event.shiftKey) {
+                            setTimeout(function() {
+                                document.getElementById("btnToolbarDateRange").click();
+                            }, 100);
+                        }
+                    }
                     break;
 
                 // Back = Esc
@@ -56,33 +65,39 @@
                     document.getElementById("btnToolbarStudentList").click();
                     break;
 
-                // Save = S
-                // Save & Back = Shift + S
+                // Save = Alt + S
+                // Save & Back = Alt + Shift + S
                 case 83:
-                    document.getElementById("btnToolbarSave").click();
-                    if (event.shiftKey) {
-                        setTimeout(function() {
-                            document.getElementById("btnToolbarStudentList").click();
-                        }, 1000);
-                        break;
+                    if (event.altKey) {
+                        document.getElementById("btnToolbarSave").click();
+                        if (event.shiftKey) {
+                            setTimeout(function() {
+                                document.getElementById("btnToolbarStudentList").click();
+                                location.reload(); // TODO: Find a better solution to fix focus issues after using this shortcut
+                            }, 1000);
+                        }
                     }
                     break;
 
-                // Next Student = >
+                // Save & Next Student = Alt + >
                 case 188:
-                    document.getElementById("btnToolbarSave").click();
-                    setTimeout(function() {
-                        document.getElementById("btnToolbarNextStudent").click();
-                    }, 1000);
+                    if (event.altKey) {
+                        document.getElementById("btnToolbarSave").click();
+                        setTimeout(function() {
+                            document.getElementById("btnToolbarNextStudent").click();
+                        }, 1000);
+                    }
                     break;
 
-                // Previous Student = <
+                // Save & Previous Student = Alt + <
                 case 190:
-                    document.getElementById("btnToolbarSave").click();
-                    setTimeout(function() {
-                        document.getElementById("btnToolbarPrevStudent").click();
-                    }, 1000);
-                    break;
+                    if (event.altKey) {
+                        document.getElementById("btnToolbarSave").click();
+                        setTimeout(function() {
+                            document.getElementById("btnToolbarPrevStudent").click();
+                        }, 1000);
+                        break;
+                    }
             }
         }
     }

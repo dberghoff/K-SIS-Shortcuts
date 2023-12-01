@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.4.2
+// @version      0.4.3
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js

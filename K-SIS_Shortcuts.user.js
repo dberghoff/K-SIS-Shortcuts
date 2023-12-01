@@ -9,7 +9,7 @@
 // @match        https://www.tampermonkey.net/index.php?version=4.19.0&ext=dhdg&updated=true
 // @icon         https://us.ksisstandard.kumon.com/favicon.ico
 // @run-at       document-body
-// @grant        window.focus
+// @grant        none
 // ==/UserScript==
 
 (function() {
@@ -21,11 +21,10 @@
             setTimeout(document.getElementById("btnToolbarFilterSort").click(),500);
             setTimeout(function() {
                 const nameInput = document.getElementById("filterFirstName");
-                setTimeout(nameInput.focus(),200);
+                setTimeout(nameInput.focus(),100);
                 setTimeout(nameInput.select(),200);
-                window.focus();
+                setTimeout(nameInput.focus(),300);
             }, 500);
-            window.focus();
         }
 
         // Ctrl + Shift + V = Score Card Entry

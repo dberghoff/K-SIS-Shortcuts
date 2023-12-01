@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.1.2
+// @version      0.1.3
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
@@ -21,9 +21,9 @@
             setTimeout(document.getElementById("btnToolbarFilterSort").click(),500);
             setTimeout(function() {
                 const nameInput = document.getElementById("filterFirstName");
+                nameInput.click();
                 setTimeout(nameInput.focus(),100);
                 setTimeout(nameInput.select(),200);
-                setTimeout(nameInput.focus(),300);
             }, 500);
         }
 

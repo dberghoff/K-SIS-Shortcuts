@@ -63,7 +63,7 @@
 
             // Save = Crtl + S
             // Save & Back = Ctrl + Shift + S ||  F12 (CMS)
-            if(event.ctrlkey && event.key == 83) {
+            if(event.ctrlkey && event.key == "s") {
                 event.preventDefault();
                 document.getElementById("btnToolbarSave").click();
                 if (event.shiftKey) {
@@ -73,7 +73,7 @@
                     }, 1000);
                 }
             }
-            if(event.key == 123) {
+            if(event.key == "F12") {
                 event.preventDefault();
                 document.getElementById("btnToolbarSave").click();
                 setTimeout(function() {
@@ -83,7 +83,7 @@
             }
 
             // Back = Esc
-            if(event.key == 27) {
+            if(event.key == "Escape") {
                 document.getElementById(backBtn).click();
             }
 
@@ -92,7 +92,7 @@
             //============ Student List ============//
 
             // Filter Menu = Ctrl + F
-            if (event.ctrlKey && event.key == 70) {
+            if (event.ctrlKey && event.key == "f") {
                 event.preventDefault();
                 document.getElementById("btnToolbarFilterSort").click();
                 setTimeout(function() { // Focus first name input field
@@ -103,49 +103,49 @@
             }
 
             // Enroll Student = F2
-            if(event.key == 113) {
+            if(event.key == "F2") {
                 event.preventDefault();
                 document.getElementById("btnToolbarStudentEnrollNew").click();
             }
 
             // Student Profile = F3
-            if(event.key == 114) {
+            if(event.key == "F3") {
                 event.preventDefault();
                 document.getElementById("btnToolbarStudentProfile").click();
             }
 
             // Score Card Entry = R || F6
-            if(event.key == 82 || event.key == 117) {
+            if(event.key == "r" || event.key == "F6") {
                 event.preventDefault();
                 document.getElementById("btnToolbarScoreCardEntry").click();
             }
 
             // Progress Goal = F7
-            if(event.key == 118) {
+            if(event.key == "F7") {
                 event.preventDefault();
                 document.getElementById("btnToolbarProgressGoal").click();
             }
 
             // Progress History = F8
-            if(event.key == 119) {
+            if(event.key == "F8") {
                 event.preventDefault();
                 document.getElementById("btnToolbarProgressHistory").click();
             }
             
             // Level Study Plan = F9
-            if(event.key == 120) {
+            if(event.key == "F9") {
                 event.preventDefault();
                 document.getElementById("btnToolbarStudyPlanLevel").click();
             }
 
             // Score Card Plan = F10
-            if(event.key == 121) {
+            if(event.key == "F10") {
                 event.preventDefault();
                 document.getElementById("btnToolbarScoreCardPlan").click();
             }
 
             // Student Comments = F11
-            if(event.key == 122) {
+            if(event.key == "F11") {
                 event.preventDefault();
                 document.getElementById("btnToolbarStudentComment").click();
             }
@@ -156,7 +156,7 @@
 
             // Date Range = Ctrl + D
             // Date Range & Save = Ctrl + Shift + D
-            if (event.ctrlKey && event.key == 68) {
+            if (event.ctrlKey && event.key == "d") {
                 event.preventDefault();
                 document.getElementById("btnToolbarDateRange").click();
                 if (event.shiftKey) {
@@ -167,7 +167,7 @@
             }
 
             // Save & Next Student = Alt + >
-            if (event.altKey && event.key == 188) {
+            if (event.altKey && event.key == ".") {
                 document.getElementById("btnToolbarSave").click();
                 setTimeout(function() {
                     document.getElementById("btnToolbarNextStudent").click();
@@ -175,7 +175,7 @@
             }
 
             // Save & Previous Student = Alt + <
-            if (event.altKey && event.key == 190) {
+            if (event.altKey && event.key == ",") {
                 document.getElementById("btnToolbarSave").click();
                 setTimeout(function() {
                     document.getElementById("btnToolbarPrevStudent").click();

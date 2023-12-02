@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.4.6
+// @version      0.4.5
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
-// @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
+// @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/blob/main/K-SIS_Shortcuts.user.js
 // @match        https://us.ksisstandard.kumon.com/*
 // @icon         https://us.ksisstandard.kumon.com/favicon.ico
 // @run-at       document-body
@@ -168,7 +168,7 @@
             }
 
             // Save & Next Student = Alt + >
-            if (event.altKey && event.code == 'ArrowRight') {
+            if (event.altKey && event.code == 'Period') {
                 event.preventDefault();
                 document.getElementById("btnToolbarSave").click();
                 setTimeout(function() {
@@ -177,7 +177,7 @@
             }
 
             // Save & Previous Student = Alt + <
-            if (event.altKey && event.code == 'ArrowLeft') {
+            if (event.altKey && event.code == 'Comma') {
                 event.preventDefault();
                 document.getElementById("btnToolbarSave").click();
                 setTimeout(function() {

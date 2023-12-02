@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.4.3
+// @version      0.4.4
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
@@ -59,96 +59,127 @@
             }
 
             // Shorcut actions
-            switch(event.keyCode) {
+            //=============== Global ===============//
 
-                //=============== Global ===============//
-
-                // Save = Crtl + S
-                // Save & Back = Ctrl + Shift + S
-                case 83:
-                    if (event.ctrlKey) {
-                        event.preventDefault();
-                        document.getElementById("btnToolbarSave").click();
-                        if (event.shiftKey) {
-                            setTimeout(function() {
-                                document.getElementById(backBtn).click();
-                                location.reload(); // TODO: Find a better solution to fix focus issues after using this shortcut
-                            }, 1000);
-                        }
-                    }
-                    break;
-
-                // Back = Esc
-                case 27:
+            // Save = Crtl + S
+            // Save & Back = Ctrl + Shift + S ||  F12 (CMS)
+            if(event.ctrlkey && event.key == 83) {
+                event.preventDefault();
+                document.getElementById("btnToolbarSave").click();
+                if (event.shiftKey) {
+                    setTimeout(function() {
+                        document.getElementById(backBtn).click();
+                        location.reload(); // TODO: Find a better solution to fix focus issues after using this shortcut
+                    }, 1000);
+                }
+            }
+            if(event.key == 123) {
+                event.preventDefault();
+                document.getElementById("btnToolbarSave").click();
+                setTimeout(function() {
                     document.getElementById(backBtn).click();
-                    break;
+                    location.reload(); // TODO: Find a better solution to fix focus issues after using this shortcut
+                }, 1000);
+            }
+
+            // Back = Esc
+            if(event.key == 27) {
+                document.getElementById(backBtn).click();
+            }
 
 
 
-                //============ Student List ============//
+            //============ Student List ============//
 
-                // Filter Menu = Ctrl + F
-                case 70:
-                    if (event.ctrlKey) {
-                        event.preventDefault();
-                        document.getElementById("btnToolbarFilterSort").click();
-                        setTimeout(function() { // Focus first name input field
-                            const nameInput = document.getElementById("filterFirstName");
-                            nameInput.focus();
-                            nameInput.select();
-                        }, 500);
-                        break;
-                    }
+            // Filter Menu = Ctrl + F
+            if (event.ctrlKey && event.key == 70) {
+                event.preventDefault();
+                document.getElementById("btnToolbarFilterSort").click();
+                setTimeout(function() { // Focus first name input field
+                    const nameInput = document.getElementById("filterFirstName");
+                    nameInput.focus();
+                    nameInput.select();
+                }, 500);
+            }
 
-                // Score Card Entry = R
-                case 82:
-                    document.getElementById("btnToolbarScoreCardEntry").click();
-                    break;
+            // Enroll Student = F2
+            if(event.key == 113) {
+                event.preventDefault();
+                document.getElementById("btnToolbarStudentEnrollNew").click();
+            }
 
-                // Progress Goal
-                // Progress History
-                // Student Profile
-                // Student Comments
-                // Level Study Plan
-                // Score Card Plan
+            // Student Profile = F3
+            if(event.key == 114) {
+                event.preventDefault();
+                document.getElementById("btnToolbarStudentProfile").click();
+            }
+
+            // Score Card Entry = R || F6
+            if(event.key == 82 || event.key == 117) {
+                event.preventDefault();
+                document.getElementById("btnToolbarScoreCardEntry").click();
+            }
+
+            // Progress Goal = F7
+            if(event.key == 118) {
+                event.preventDefault();
+                document.getElementById("btnToolbarProgressGoal").click();
+            }
+
+            // Progress History = F8
+            if(event.key == 119) {
+                event.preventDefault();
+                document.getElementById("btnToolbarProgressHistory").click();
+            }
+            
+            // Level Study Plan = F9
+            if(event.key == 120) {
+                event.preventDefault();
+                document.getElementById("btnToolbarStudyPlanLevel").click();
+            }
+
+            // Score Card Plan = F10
+            if(event.key == 121) {
+                event.preventDefault();
+                document.getElementById("btnToolbarScoreCardPlan").click();
+            }
+
+            // Student Comments = F11
+            if(event.key == 122) {
+                event.preventDefault();
+                document.getElementById("btnToolbarStudentComment").click();
+            }
 
 
 
-                //========== Score Card Entry ==========//
+            //========== Score Card Entry ==========//
 
-                // Date Range = Ctrl + D
-                // Date Range & Save = Ctrl + Shift + D
-                case 68:
-                    if (event.ctrlKey) {
-                        event.preventDefault();
-                        document.getElementById("btnToolbarDateRange").click();
-                        if (event.shiftKey) {
-                            setTimeout(function() {
-                                document.getElementById("btnToolbarSave").click();
-                            }, 100);
-                        }
-                    }
-                    break;
-
-                // Save & Next Student = Alt + >
-                case 188:
-                    if (event.altKey) {
+            // Date Range = Ctrl + D
+            // Date Range & Save = Ctrl + Shift + D
+            if (event.ctrlKey && event.key == 68) {
+                event.preventDefault();
+                document.getElementById("btnToolbarDateRange").click();
+                if (event.shiftKey) {
+                    setTimeout(function() {
                         document.getElementById("btnToolbarSave").click();
-                        setTimeout(function() {
-                            document.getElementById("btnToolbarNextStudent").click();
-                        }, 1000);
-                    }
-                    break;
+                    }, 100);
+                }
+            }
 
-                // Save & Previous Student = Alt + <
-                case 190:
-                    if (event.altKey) {
-                        document.getElementById("btnToolbarSave").click();
-                        setTimeout(function() {
-                            document.getElementById("btnToolbarPrevStudent").click();
-                        }, 1000);
-                    }
-                    break;
+            // Save & Next Student = Alt + >
+            if (event.altKey && event.key == 188) {
+                document.getElementById("btnToolbarSave").click();
+                setTimeout(function() {
+                    document.getElementById("btnToolbarNextStudent").click();
+                }, 1000);
+            }
+
+            // Save & Previous Student = Alt + <
+            if (event.altKey && event.key == 190) {
+                document.getElementById("btnToolbarSave").click();
+                setTimeout(function() {
+                    document.getElementById("btnToolbarPrevStudent").click();
+                }, 1000);
             }
         }
     })

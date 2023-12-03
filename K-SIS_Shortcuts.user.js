@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.4.9
+// @version      0.4.10
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
@@ -177,7 +177,7 @@
             //             document.getElementById("btnToolbarSave").click();
             //         }, 100);
             //     }
-            // }
+            }
 
             // Save & Next Student = Alt + >
             if (event.altKey && event.code == 'Period') {

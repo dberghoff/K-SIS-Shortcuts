@@ -79,7 +79,7 @@
                 if (event.shiftKey) {
                     setTimeout(function() {
                         document.getElementById(backBtn).click();
-                        location.reload(); // TODO: Find a better solution to fix focus issues after using this shortcut
+                        setTimeout(location.reload(), 600); // TODO: Find a better solution to fix focus issues after using this shortcut
                     }, 500);
                 }
             }

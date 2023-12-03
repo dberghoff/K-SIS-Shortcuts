@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.4.7
+// @version      0.4.8
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
@@ -14,7 +14,7 @@
 (function() {
     'use strict';0;
 
-    // check if user has opened a dialog window
+    // Check if user has opened a dialog window
     var inDialog = false;
     var observer = new MutationObserver(function(mutations, observer) {
         for (var i = 0; i < mutations.length; i++) {
@@ -35,7 +35,7 @@
 
     // Listen for keyboard events
     document.addEventListener("keydown", (event) => {
-        if (!inDialog) { // Do nothing if user is editing a form
+        if (!inDialog) { // Do nothing if dialog open
 
             // Set the best button to use to go back from current page
             let url = document.location.toString();
@@ -118,28 +118,22 @@
                 document.getElementById("btnToolbarStudentEnrollNew").click();
             }
 
-            // Student Profile = F3
-            if(event.code == "F3") {
-                event.preventDefault();
-                document.getElementById("btnToolbarStudentProfile").click();
-            }
-
             // Score Card Entry = R || F6
             if(event.code == 'KeyR' || event.code == 'F12') {
                 event.preventDefault();
                 document.getElementById("btnToolbarScoreCardEntry").click();
             }
 
-            // Progress Goal = F7
+            // Student Profile = F7
             if(event.code == "F7") {
                 event.preventDefault();
-                document.getElementById("btnToolbarProgressGoal").click();
+                document.getElementById("btnToolbarStudentProfile").click();
             }
 
-            // Progress History = F8
+            // Progress Goal = F8
             if(event.code == "F8") {
                 event.preventDefault();
-                document.getElementById("btnToolbarProgressHistory").click();
+                document.getElementById("btnToolbarProgressGoal").click();
             }
 
             // Level Study Plan = F9
@@ -148,11 +142,17 @@
                 document.getElementById("btnToolbarStudyPlanLevel").click();
             }
 
-            // Score Card Plan = F10
+            // Progress History = F10
             if(event.code == "F10") {
                 event.preventDefault();
-                document.getElementById("btnToolbarScoreCardPlan").click();
+                document.getElementById("btnToolbarProgressHistory").click();
             }
+
+            // Score Card Plan = F10
+            // if(event.code == "F10") {
+            //     event.preventDefault();
+            //     document.getElementById("btnToolbarScoreCardPlan").click();
+            // }
 
             // Student Comments = F11
             if(event.code == "F11") {

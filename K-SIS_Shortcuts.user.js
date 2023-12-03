@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.4.6
+// @version      0.4.7
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
@@ -14,18 +14,28 @@
 (function() {
     'use strict';0;
 
-    // Check if user has focus on form input
-    var formFocus = false;
-    document.addEventListener("focusin", (event) => {
-        formFocus = document.getElementById(event.target.id).className.includes("form-control"); // TODO: Get focus of scorecard & catch errors w/ clicking on elements w/o className
+    // check if user has opened a dialog window
+    var inDialog = false;
+    var observer = new MutationObserver(function(mutations, observer) {
+        for (var i = 0; i < mutations.length; i++) {
+            //console.log(mutations[i].target.getAttributeNode("class"));
+            if (mutations[i].target.getAttributeNode("class").value == "notranslate modal-open") {
+                //console.log("Dialog focused");
+                inDialog = true;
+            }
+            else if (mutations[i].target.getAttributeNode("class").value == "notranslate") {
+                //console.log("Dialog unfocused");
+                inDialog = false;
+            }
+        }
     });
-    document.addEventListener("focusout", () => {
-        formFocus = false;
+    observer.observe(document.body, {
+        attributeFilter: ["class"]
     });
 
     // Listen for keyboard events
     document.addEventListener("keydown", (event) => {
-        if (!formFocus) { // Do nothing if user is editing a form
+        if (!inDialog) { // Do nothing if user is editing a form
 
             // Set the best button to use to go back from current page
             let url = document.location.toString();

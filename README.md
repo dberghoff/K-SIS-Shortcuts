@@ -16,7 +16,6 @@ Progress History = F10
 Student Comments = F11  
 
 ## Score Card Shortcuts
-Date Range = Ctrl + D  
-Date Range & Save = Ctrl + Shift + D  
+Date Range & Save = Ctrl + D  
 Save & Next Student = Alt + >  
 Save & Previous Student = Alt + <  

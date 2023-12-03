@@ -164,18 +164,20 @@
 
             //========== Score Card Entry ==========//
 
-            // Date Range = Ctrl + D
-            // Date Range & Save = Ctrl + Shift + D
+            // Date Range & Save = Ctrl + D
             if (event.ctrlKey && event.code == 'KeyD') {
                 event.preventDefault();
                 document.getElementById("btnToolbarDateRange").click();
-                if (event.shiftKey) {
-                    event.preventDefault();
-                    setTimeout(function() {
-                        document.getElementById("btnToolbarSave").click();
-                    }, 100);
-                }
-            }
+                setTimeout(function() {
+                    document.getElementById("btnToolbarSave").click();
+                }, 100);
+            //     if (event.shiftKey) {
+            //         event.preventDefault();
+            //         setTimeout(function() {
+            //             document.getElementById("btnToolbarSave").click();
+            //         }, 100);
+            //     }
+            // }
 
             // Save & Next Student = Alt + >
             if (event.altKey && event.code == 'Period') {

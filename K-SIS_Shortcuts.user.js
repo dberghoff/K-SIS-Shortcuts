@@ -119,7 +119,7 @@
             }
 
             // Score Card Entry = R || F6
-            if(event.code == 'KeyR' || event.code == 'F12') {
+            if(event.code == 'KeyR' || event.code == 'F6') {
                 event.preventDefault();
                 document.getElementById("btnToolbarScoreCardEntry").click();
             }

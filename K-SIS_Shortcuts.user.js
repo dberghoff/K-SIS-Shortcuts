@@ -34,6 +34,8 @@
     document.addEventListener("keydown", (event) => {
         if (!inDialog) { // Do nothing if dialog open
 
+            const SAVE_DELAY = 600;
+
             // Shorcut actions
             //=============== Global ===============//
 
@@ -44,7 +46,7 @@
                 if (event.shiftKey) {
                     setTimeout(() => {
                         back(event)
-                    },500);
+                    },SAVE_DELAY);
                 }
                 return;
             }
@@ -54,7 +56,7 @@
                 shortcutClick(event, "btnToolbarSave");
                 setTimeout(() => {
                     back(event)
-                },500);
+                },SAVE_DELAY);
                 return;
             }
 

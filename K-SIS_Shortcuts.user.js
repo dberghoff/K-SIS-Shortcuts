@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.5.0
+// @version      0.5.1
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
@@ -73,7 +73,7 @@
             }
 
             // Enroll Student = F2
-            if(event.code == "F2") {
+            if(event.code == "KeyE" || event.code == "F2") {
                 shortcutClick(event, "btnToolbarStudentEnrollNew");
             }
 
@@ -83,33 +83,32 @@
             }
 
             // Student Profile = F7
-            if(event.code == "F7") {
+            if(event.code == "KeyP" || event.code == "F7") {
                 shortcutClick(event, "btnToolbarStudentProfile");
             }
 
             // Progress Goal = F8
-            if(event.code == "F8") {
+            if(event.code == "KeyG" || event.code == "F8") {
                 shortcutClick(event, "btnToolbarProgressGoal");
             }
 
             // Level Study Plan = F9
-            if(event.code == "F9") {
+            if(event.code == "KeyL" || event.code == "F9") {
                 shortcutClick(event, "btnToolbarStudyPlanLevel");
             }
 
             // Progress History = F10
-            if(event.code == "F10") {
+            if(event.code == "KeyH" || event.code == "F10") {
                 shortcutClick(event, "btnToolbarProgressHistory");
             }
 
             // Score Card Plan = F10
-            // if(event.code == "F10") {
-            //     event.preventDefault();
-            //     document.getElementById("btnToolbarScoreCardPlan").click();
-            // }
+            if(event.code == "KeyS") {
+                shortcutClick(event, "btnToolbarScoreCardPlan");
+            }
 
             // Student Comments = F11
-            if(event.code == "F11") {
+            if(event.code == "KeyC" || event.code == "F11") {
                 shortcutClick(event, "btnToolbarStudentComment");
             }
 

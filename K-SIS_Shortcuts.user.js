@@ -18,13 +18,10 @@
     var inDialog = false;
     var observer = new MutationObserver(function(mutations, observer) {
         for (var i = 0; i < mutations.length; i++) {
-            //console.log(mutations[i].target.getAttributeNode("class"));
             if (mutations[i].target.getAttributeNode("class").value == "notranslate modal-open") {
-                //console.log("Dialog focused");
                 inDialog = true;
             }
             else if (mutations[i].target.getAttributeNode("class").value == "notranslate") {
-                //console.log("Dialog unfocused");
                 inDialog = false;
             }
         }
@@ -40,28 +37,33 @@
             // Shorcut actions
             //=============== Global ===============//
 
-            // Save = Crtl + S
-            // Save & Back = Ctrl + Shift + S ||  F12 (CMS)
+            // Save
             if(event.ctrlKey && event.code == "KeyS") {
                 shortcutClick(event, "btnToolbarSave");
+                // Save & Back
                 if (event.shiftKey) {
-                    back(event, page(), true);
+                    back(event, true);
                 }
-            }
-            if(event.code == "F12") {
-                shortcutClick(event, "btnToolbarSave");
-                back(event, page(), true);
+                return;
             }
 
-            // Back = Esc
+            // Save & Back
+            if(event.code == "F12") {
+                shortcutClick(event, "btnToolbarSave");
+                back(event, true);
+                return;
+            }
+
+            // Back
             if(event.code == "Escape") {
-                back(event, page(), false);
+                back(event, false);
+                return;
             }
 
 
             //============ Student List ============//
 
-            // Filter Menu = Ctrl + F
+            // Filter Menu
             if (event.ctrlKey && event.code == "KeyF") {
                 if (shortcutClick(event, "btnToolbarFilterSort")) {
                     setTimeout(function() { // Focus first name input field
@@ -70,71 +72,89 @@
                         nameInput.select();
                     }, 250);
                 }
+                return;
             }
 
-            // Enroll Student = F2
+            // Enroll Student
             if(event.code == "KeyE" || event.code == "F2") {
                 shortcutClick(event, "btnToolbarStudentEnrollNew");
+                return;
             }
 
-            // Score Card Entry = R || F6
+            // Score Card Entry
             if(event.code == "KeyR" || event.code == "F6") {
                 shortcutClick(event, "btnToolbarScoreCardEntry");
+                return;
             }
 
-            // Student Profile = F7
+            // Student Profile
             if(event.code == "KeyP" || event.code == "F7") {
                 shortcutClick(event, "btnToolbarStudentProfile");
+                return;
             }
 
-            // Progress Goal = F8
+            // Progress Goal
             if(event.code == "KeyG" || event.code == "F8") {
                 shortcutClick(event, "btnToolbarProgressGoal");
+                return;
             }
 
-            // Level Study Plan = F9
+            // Level Study Plan
             if(event.code == "KeyL" || event.code == "F9") {
                 shortcutClick(event, "btnToolbarStudyPlanLevel");
+                return;
             }
 
-            // Progress History = F10
+            // Progress History
             if(event.code == "KeyH" || event.code == "F10") {
                 shortcutClick(event, "btnToolbarProgressHistory");
+                return;
             }
 
-            // Score Card Plan = F10
+            // Score Card Plan
             if(event.code == "KeyS") {
                 shortcutClick(event, "btnToolbarScoreCardPlan");
+                return;
             }
 
-            // Student Comments = F11
+            // Student Comments
             if(event.code == "KeyC" || event.code == "F11") {
                 shortcutClick(event, "btnToolbarStudentComment");
+                return;
+            }
+
+            // Transfer Report
+            if(event.code == "KeyT") {
+                shortcutClick(event, "btnToolbarStudentTransferReport");
+                return;
             }
 
 
             //========== Score Card Entry ==========//
 
-            // Date Range & Save = Ctrl + D
+            // Date Range & Save
             if (event.ctrlKey && event.code == "KeyD") {
                 shortcutClick(event, "btnToolbarSave");
                 shortcutClick(event, "btnToolbarDateRange");
+                return;
             }
 
-            // Save & Next Student = Alt + >
+            // Save & Next Student
             if (event.altKey && event.code == "Period") {
                 shortcutClick(event, "btnToolbarSave");
                 setTimeout(function() {
                     shortcutClick(event, "btnToolbarNextStudent")
                 }, 500);
+                return;
             }
 
-            // Save & Previous Student = Alt + <
+            // Save & Previous Student
             if (event.altKey && event.code == "Comma") {
                 shortcutClick(event, "btnToolbarSave");
                 setTimeout(function() {
                     shortcutClick(event, "btnToolbarPrevStudent")
                 }, 500);
+                return;
             }
         }
     })
@@ -159,10 +179,10 @@
     }
 
     // Click back/studentlist/home button
-    function back(event, page, reload) {
+    function back(event, reload) {
         // Set the best button to use to go back from current page
         let backBtn;
-        switch (page) {
+        switch (page()) {
             case "scorecardentry":
                 backBtn = "btnToolbarStudentList";
                 break;
@@ -184,12 +204,18 @@
             case "scorecardplan":
                 backBtn = "btnToolbarBack";
                 break;
+            case "printview":
+                backBtn = "btnToolbarBack";
+                break;
             default:
                 backBtn = "btnToolbarHome";
                 break;
         }
+
         if (!shortcutClick(event, backBtn)) return 0;
+        
         if (reload) setTimeout(location.reload(), 600); // TODO: Find a better solution to fix focus issues after using this shortcut
+        
         return 1;
     }
 })();

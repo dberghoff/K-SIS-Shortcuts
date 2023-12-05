@@ -150,7 +150,7 @@
                 shortcutClick(event, "btnToolbarSave");
                 setTimeout(() => {
                     shortcutClick(event, "btnToolbarNextStudent")
-                }, 500);
+                }, SAVE_DELAY);
                 return;
             }
 
@@ -159,7 +159,7 @@
                 shortcutClick(event, "btnToolbarSave");
                 setTimeout(() => {
                     shortcutClick(event, "btnToolbarPrevStudent")
-                }, 500);
+                }, SAVE_DELAY);
                 return;
             }
         }

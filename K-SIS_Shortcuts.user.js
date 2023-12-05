@@ -42,21 +42,25 @@
                 shortcutClick(event, "btnToolbarSave");
                 // Save & Back
                 if (event.shiftKey) {
-                    back(event, true);
+                    setTimeout(() => {
+                        back(event)
+                    },500);
                 }
                 return;
             }
 
             // Save & Back
-            if(event.code == "F12") {
+            else if(event.code == "F12") {
                 shortcutClick(event, "btnToolbarSave");
-                back(event, true);
+                setTimeout(() => {
+                    back(event)
+                },500);
                 return;
             }
 
             // Back
-            if(event.code == "Escape") {
-                back(event, false);
+            else if(event.code == "Escape") {
+                back(event);
                 return;
             }
 
@@ -64,67 +68,67 @@
             //============ Student List ============//
 
             // Filter Menu
-            if (event.ctrlKey && event.code == "KeyF") {
+            else if (event.ctrlKey && event.code == "KeyF") {
                 if (shortcutClick(event, "btnToolbarFilterSort")) {
-                    setTimeout(function() { // Focus first name input field
+                    setTimeout(() => { // Focus first name input field
                         let nameInput = document.getElementById("filterFirstName");
                         nameInput.focus();
                         nameInput.select();
-                    }, 250);
+                    }, 300);
                 }
                 return;
             }
 
             // Enroll Student
-            if(event.code == "KeyE" || event.code == "F2") {
+            else if(event.code == "KeyE" || event.code == "F2") {
                 shortcutClick(event, "btnToolbarStudentEnrollNew");
                 return;
             }
 
             // Score Card Entry
-            if(event.code == "KeyR" || event.code == "F6") {
+            else if(event.code == "KeyR" || event.code == "F6") {
                 shortcutClick(event, "btnToolbarScoreCardEntry");
                 return;
             }
 
             // Student Profile
-            if(event.code == "KeyP" || event.code == "F7") {
+            else if(event.code == "KeyP" || event.code == "F7") {
                 shortcutClick(event, "btnToolbarStudentProfile");
                 return;
             }
 
             // Progress Goal
-            if(event.code == "KeyG" || event.code == "F8") {
+            else if(event.code == "KeyG" || event.code == "F8") {
                 shortcutClick(event, "btnToolbarProgressGoal");
                 return;
             }
 
             // Level Study Plan
-            if(event.code == "KeyL" || event.code == "F9") {
+            else if(event.code == "KeyL" || event.code == "F9") {
                 shortcutClick(event, "btnToolbarStudyPlanLevel");
                 return;
             }
 
             // Progress History
-            if(event.code == "KeyH" || event.code == "F10") {
+            else if(event.code == "KeyH" || event.code == "F10") {
                 shortcutClick(event, "btnToolbarProgressHistory");
                 return;
             }
 
             // Score Card Plan
-            if(event.code == "KeyS") {
+            else if(event.code == "KeyS") {
                 shortcutClick(event, "btnToolbarScoreCardPlan");
                 return;
             }
 
             // Student Comments
-            if(event.code == "KeyC" || event.code == "F11") {
+            else if(event.code == "KeyC" || event.code == "F11") {
                 shortcutClick(event, "btnToolbarStudentComment");
                 return;
             }
 
             // Transfer Report
-            if(event.code == "KeyT") {
+            else if(event.code == "KeyT") {
                 shortcutClick(event, "btnToolbarStudentTransferReport");
                 return;
             }
@@ -133,25 +137,25 @@
             //========== Score Card Entry ==========//
 
             // Date Range & Save
-            if (event.ctrlKey && event.code == "KeyD") {
+            else if (event.ctrlKey && event.code == "KeyD") {
                 shortcutClick(event, "btnToolbarSave");
                 shortcutClick(event, "btnToolbarDateRange");
                 return;
             }
 
             // Save & Next Student
-            if (event.altKey && event.code == "Period") {
+            else if (event.altKey && event.code == "Period") {
                 shortcutClick(event, "btnToolbarSave");
-                setTimeout(function() {
+                setTimeout(() => {
                     shortcutClick(event, "btnToolbarNextStudent")
                 }, 500);
                 return;
             }
 
             // Save & Previous Student
-            if (event.altKey && event.code == "Comma") {
+            else if (event.altKey && event.code == "Comma") {
                 shortcutClick(event, "btnToolbarSave");
-                setTimeout(function() {
+                setTimeout(() => {
                     shortcutClick(event, "btnToolbarPrevStudent")
                 }, 500);
                 return;
@@ -168,18 +172,47 @@
     }
 
     // Click button do thing
-    function shortcutClick(event, button) {
+    // function shortcutClick(event, button) {
+    //     event.preventDefault();
+    //     try {
+    //         document.getElementById(button).click();
+    //         return 1;
+    //     } catch (error) {
+    //         return 0;
+    //     }
+    // }
+
+    // I have to simulate a full mouse click because K-SIS is stupid...
+    function shortcutClick(event, buttonName) {
         event.preventDefault();
+
+        var button = document.getElementById(buttonName);
+        function simulateMouseEvent(element, eventName, coordX, coordY) {
+            element.dispatchEvent(new MouseEvent(eventName, {
+                view: window,
+                bubbles: true,
+                cancelable: true,
+                clientX: coordX,
+                clientY: coordY,
+                button: 0
+            }));
+        };
+
         try {
-            document.getElementById(button).click();
-            return 1;
-        } catch (error) {
-            return 0;
-        }
+            var buttonPos = button.getBoundingClientRect();
+            var coordX = buttonPos.left + (buttonPos.right - buttonPos.left) / 2;
+            var coordY = buttonPos.top + (buttonPos.bottom - buttonPos.top) / 2;
+            
+            simulateMouseEvent(button, "mousedown", coordX, coordY);
+            simulateMouseEvent(button, "mouseup", coordX, coordY);
+            simulateMouseEvent(button, "click", coordX, coordY);
+        } catch (error) { return 0; }
+
+        return 1;
     }
 
     // Click back/studentlist/home button
-    function back(event, reload) {
+    function back(event) {
         // Set the best button to use to go back from current page
         let backBtn;
         switch (page()) {
@@ -213,8 +246,6 @@
         }
 
         if (!shortcutClick(event, backBtn)) return 0;
-        
-        if (reload) setTimeout(location.reload(), 600); // TODO: Find a better solution to fix focus issues after using this shortcut
         
         return 1;
     }

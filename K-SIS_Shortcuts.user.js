@@ -36,6 +36,8 @@
 
             const SAVE_DELAY = 600;
 
+            // TODO: prevent shortcut usage on score card entry comments
+            // TODO: add arrow up/down key usage on student list using element.previousElementSibling and element nextElementSibling
             // Shorcut actions
             //=============== Global ===============//
 

@@ -82,56 +82,50 @@
             }
 
             // Enroll Student
-            else if(event.code == "KeyE" || event.code == "F2") {
+            else if(event.code == "F2") {
                 shortcutClick(event, "btnToolbarStudentEnrollNew");
                 return;
             }
 
             // Score Card Entry
-            else if(event.code == "KeyR" || event.code == "F6") {
+            else if(event.code == "F6") {
                 shortcutClick(event, "btnToolbarScoreCardEntry");
                 return;
             }
 
             // Student Profile
-            else if(event.code == "KeyP" || event.code == "F7") {
+            else if(event.code == "F7") {
                 shortcutClick(event, "btnToolbarStudentProfile");
                 return;
             }
 
             // Progress Goal
-            else if(event.code == "KeyG" || event.code == "F8") {
+            else if(event.code == "F8") {
                 shortcutClick(event, "btnToolbarProgressGoal");
                 return;
             }
 
             // Level Study Plan
-            else if(event.code == "KeyL" || event.code == "F9") {
+            else if(event.code == "F9") {
                 shortcutClick(event, "btnToolbarStudyPlanLevel");
                 return;
             }
 
             // Progress History
-            else if(event.code == "KeyH" || event.code == "F10") {
+            else if(event.code == "F10") {
                 shortcutClick(event, "btnToolbarProgressHistory");
                 return;
             }
 
             // Score Card Plan
-            else if(event.code == "KeyS") {
+            else if(event.ctrlKey && "event.code == "F9") {
                 shortcutClick(event, "btnToolbarScoreCardPlan");
                 return;
             }
 
             // Student Comments
-            else if(event.code == "KeyC" || event.code == "F11") {
+            else if(event.code == "F11") {
                 shortcutClick(event, "btnToolbarStudentComment");
-                return;
-            }
-
-            // Transfer Report
-            else if(event.code == "KeyT") {
-                shortcutClick(event, "btnToolbarStudentTransferReport");
                 return;
             }
 

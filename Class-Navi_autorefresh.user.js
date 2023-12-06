@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Class Navi Auto Refresh
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Click the refresh button after a set interval
 // @author       Dan Berghoff
 // @match        https://class-navi.digital.kumon.com/*
@@ -11,5 +11,10 @@
 
 (function() {
     'use strict';
-    document.getElementsByClassName("button")[0].click();
+    document.addEventListener("keydown", (event) => {
+        if (event.ctrlKey && event.code == "KeyR") {
+            event.preventDefault();
+            document.getElementsByClassName("button")[0].click();
+        }
+    }
 })();

@@ -34,7 +34,7 @@
     document.addEventListener("keydown", (event) => {
         if (!inDialog) { // Do nothing if dialog open
 
-            const SAVE_DELAY = 600;
+            const SAVE_DELAY = 700;
 
             // Shorcut actions
             //=============== Global ===============//

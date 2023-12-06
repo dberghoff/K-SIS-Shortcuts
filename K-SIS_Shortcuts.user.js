@@ -35,6 +35,7 @@
         if (!inDialog) { // Do nothing if dialog open
 
             const SAVE_DELAY = 700;
+            const FILTER_DELAY = 250;
 
             // Shorcut actions
             //=============== Global ===============//
@@ -76,7 +77,7 @@
                         let nameInput = document.getElementById("filterFirstName");
                         nameInput.focus();
                         nameInput.select();
-                    }, 300);
+                    }, FILTER_DELAY);
                 }
                 return;
             }
@@ -106,7 +107,7 @@
             }
 
             // Level Study Plan
-            else if(event.code == "F9") {
+            else if(!event.ctrlKey && event.code == "F9") {
                 shortcutClick(event, "btnToolbarStudyPlanLevel");
                 return;
             }
@@ -118,7 +119,7 @@
             }
 
             // Score Card Plan
-            else if(event.ctrlKey && "event.code == "F9") {
+            else if(event.ctrlKey && event.code == "F9") {
                 shortcutClick(event, "btnToolbarScoreCardPlan");
                 return;
             }
@@ -198,7 +199,7 @@
             var buttonPos = button.getBoundingClientRect();
             var coordX = buttonPos.left + (buttonPos.right - buttonPos.left) / 2;
             var coordY = buttonPos.top + (buttonPos.bottom - buttonPos.top) / 2;
-            
+
             simulateMouseEvent(button, "mousedown", coordX, coordY);
             simulateMouseEvent(button, "mouseup", coordX, coordY);
             simulateMouseEvent(button, "click", coordX, coordY);
@@ -236,13 +237,16 @@
             case "printview":
                 backBtn = "btnToolbarBack";
                 break;
+            case "error":
+                backBtn = "btnToolbarBack";
+                break;
             default:
                 backBtn = "btnToolbarHome";
                 break;
         }
 
         if (!shortcutClick(event, backBtn)) return 0;
-        
+
         return 1;
     }
 })();

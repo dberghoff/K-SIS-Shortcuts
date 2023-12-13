@@ -59,7 +59,7 @@
                 clickElement(event, findButton("btnToolbarSave"));
                 // Save & Back
                 if (event.shiftKey) {
-                    setTimeout(() => {
+                    setTimeout(() => {    // TODO: move to separate function and listen for console log "scope.isModified false" before back()
                         back(event)
                     },SAVE_DELAY);
                 }

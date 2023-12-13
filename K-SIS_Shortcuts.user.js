@@ -7,12 +7,15 @@
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
 // @match        https://us.ksisstandard.kumon.com/*
 // @icon         https://us.ksisstandard.kumon.com/favicon.ico
-// @run-at       document-body
+// @run-at       document-start
 // @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';0;
+
+    const SAVE_DELAY = 700;
+    const FILTER_DELAY = 250;
 
     // Check if user has opened a dialog window
     var inDialog = false;
@@ -34,15 +37,12 @@
     document.addEventListener("keydown", (event) => {
         if (!inDialog) { // Do nothing if dialog open
 
-            const SAVE_DELAY = 700;
-            const FILTER_DELAY = 250;
-
             // Shorcut actions
             //=============== Global ===============//
 
             // Save
             if(event.ctrlKey && event.code == "KeyS") {
-                shortcutClick(event, "btnToolbarSave");
+                clickElement(event, findButton("btnToolbarSave"));
                 // Save & Back
                 if (event.shiftKey) {
                     setTimeout(() => {
@@ -54,7 +54,7 @@
 
             // Save & Back
             else if(event.code == "F12") {
-                shortcutClick(event, "btnToolbarSave");
+                clickElement(event, findButton("btnToolbarSave"));
                 setTimeout(() => {
                     back(event)
                 },SAVE_DELAY);
@@ -70,9 +70,27 @@
 
             //============ Student List ============//
 
+            // Move Up
+            else if (event.code.includes("Arrow") && page() == "studentlist") {
+                let rowSelected = document.getElementsByClassName("k-master-row ng-scope k-state-selected")[0];
+                let rowClick = null;
+                
+                if (event.code == "ArrowUp") {
+                    rowClick = rowSelected.previousElementSibling;
+                }
+
+                else if (event.code == "ArrowDown") {
+                    rowClick = rowSelected.nextElementSibling;
+                }
+
+                if (rowClick == null) return;
+                clickElement(event, rowClick);
+                return;
+            }
+
             // Filter Menu
             else if (event.ctrlKey && event.code == "KeyF") {
-                if (shortcutClick(event, "btnToolbarFilterSort")) {
+                if (clickElement(event, findButton("btnToolbarFilterSort"))) {
                     setTimeout(() => { // Focus first name input field
                         let nameInput = document.getElementById("filterFirstName");
                         nameInput.focus();
@@ -84,49 +102,49 @@
 
             // Enroll Student
             else if(event.code == "F2") {
-                shortcutClick(event, "btnToolbarStudentEnrollNew");
+                clickElement(event, findButton("btnToolbarStudentEnrollNew"));
                 return;
             }
 
             // Score Card Entry
             else if(event.code == "F6") {
-                shortcutClick(event, "btnToolbarScoreCardEntry");
+                clickElement(event, findButton("btnToolbarScoreCardEntry"));
                 return;
             }
 
             // Student Profile
             else if(event.code == "F7") {
-                shortcutClick(event, "btnToolbarStudentProfile");
+                clickElement(event, findButton("btnToolbarStudentProfile"));
                 return;
             }
 
             // Progress Goal
             else if(event.code == "F8") {
-                shortcutClick(event, "btnToolbarProgressGoal");
+                clickElement(event, findButton("btnToolbarProgressGoal"));
                 return;
             }
 
             // Level Study Plan
             else if(!event.ctrlKey && event.code == "F9") {
-                shortcutClick(event, "btnToolbarStudyPlanLevel");
+                clickElement(event, findButton("btnToolbarStudyPlanLevel"));
                 return;
             }
 
             // Progress History
             else if(event.code == "F10") {
-                shortcutClick(event, "btnToolbarProgressHistory");
+                clickElement(event, findButton("btnToolbarProgressHistory"));
                 return;
             }
 
             // Score Card Plan
             else if(event.ctrlKey && event.code == "F9") {
-                shortcutClick(event, "btnToolbarScoreCardPlan");
+                clickElement(event, findButton("btnToolbarScoreCardPlan"));
                 return;
             }
 
             // Student Comments
             else if(event.code == "F11") {
-                shortcutClick(event, "btnToolbarStudentComment");
+                clickElement(event, findButton("btnToolbarStudentComment"));
                 return;
             }
 
@@ -135,25 +153,25 @@
 
             // Date Range & Save
             else if (event.ctrlKey && event.code == "KeyD") {
-                shortcutClick(event, "btnToolbarSave");
-                shortcutClick(event, "btnToolbarDateRange");
+                clickElement(event, findButton("btnToolbarSave"));
+                clickElement(event, findButton("btnToolbarDateRange"));
                 return;
             }
 
             // Save & Next Student
             else if (event.altKey && event.code == "Period") {
-                shortcutClick(event, "btnToolbarSave");
+                clickElement(event, findButton("btnToolbarSave"));
                 setTimeout(() => {
-                    shortcutClick(event, "btnToolbarNextStudent")
+                    clickElement(event, findButton("btnToolbarNextStudent"))
                 }, SAVE_DELAY);
                 return;
             }
 
             // Save & Previous Student
             else if (event.altKey && event.code == "Comma") {
-                shortcutClick(event, "btnToolbarSave");
+                clickElement(event, findButton("btnToolbarSave"));
                 setTimeout(() => {
-                    shortcutClick(event, "btnToolbarPrevStudent")
+                    clickElement(event, findButton("btnToolbarPrevStudent"))
                 }, SAVE_DELAY);
                 return;
             }
@@ -168,6 +186,17 @@
         return url.slice(37, (indexSlash >= 0) ? indexSlash:100);
     }
 
+    // Find button on page
+    function findButton(buttonName) {
+        let buttonElement = null;
+
+        try {
+            buttonElement = document.getElementById(buttonName);
+        } catch (error) {}
+
+        return buttonElement;
+    }
+
     // Click button do thing
     // function shortcutClick(event, button) {
     //     event.preventDefault();
@@ -180,10 +209,10 @@
     // }
 
     // I have to simulate a full mouse click because K-SIS is stupid...
-    function shortcutClick(event, buttonName) {
+    function clickElement(event, button) {
         event.preventDefault();
 
-        var button = document.getElementById(buttonName);
+        //var button = document.getElementById(buttonName);
         function simulateMouseEvent(element, eventName, coordX, coordY) {
             element.dispatchEvent(new MouseEvent(eventName, {
                 view: window,
@@ -245,7 +274,7 @@
                 break;
         }
 
-        if (!shortcutClick(event, backBtn)) return 0;
+        if (!clickElement(event, findButton(backBtn))) return 0;
 
         return 1;
     }

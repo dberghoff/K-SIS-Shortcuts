@@ -17,20 +17,35 @@
     const SAVE_DELAY = 700;
     const FILTER_DELAY = 250;
 
-    // Check if user has opened a dialog window
     var inDialog = false;
-    var observer = new MutationObserver(function(mutations, observer) {
+    var observerDialog = new MutationObserver(function(mutations) {
         for (var i = 0; i < mutations.length; i++) {
-            if (mutations[i].target.getAttributeNode("class").value == "notranslate modal-open") {
+
+            // Remove tooltip from score card time input
+            if (mutations[i].target.hasAttribute("gcuielement")) {
+                let element = mutations[i].target;
+                if (element.getAttribute("gcuielement") == "gcSpread") {
+                    let tooltip = element.childNodes[0].childNodes[2];
+                    if (tooltip != null) {
+                        tooltip.remove();
+                    }
+                }
+            }
+
+            // Check if user has opened a dialog window
+            if (mutations[i].target.getAttribute("class") == null) continue;
+            if (mutations[i].target.getAttribute("class") == "notranslate modal-open") {
                 inDialog = true;
             }
-            else if (mutations[i].target.getAttributeNode("class").value == "notranslate") {
+            else if (mutations[i].target.getAttribute("class") == "notranslate") {
                 inDialog = false;
             }
         }
     });
-    observer.observe(document.body, {
-        attributeFilter: ["class"]
+    observerDialog.observe(document.body, {
+        attributeFilter: ["class", "gcuielement"],
+        subtree: true,
+        childList: true
     });
 
     // Listen for keyboard events
@@ -74,7 +89,7 @@
             else if (event.code.includes("Arrow") && page() == "studentlist") {
                 let rowSelected = document.getElementsByClassName("k-master-row ng-scope k-state-selected")[0];
                 let rowClick = null;
-                
+
                 if (event.code == "ArrowUp") {
                     rowClick = rowSelected.previousElementSibling;
                 }

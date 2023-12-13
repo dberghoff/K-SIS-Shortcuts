@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         K-SIS Shorcuts
 // @namespace    http://tampermonkey.net/
-// @version      0.5.4
+// @version      0.5.5
 // @description  Various shortcuts to make using K-SIS less annoying
 // @author       Dan Berghoff
 // @updateURL    https://github.com/dberghoff/K-SIS-Shortcuts/raw/main/K-SIS_Shortcuts.user.js
@@ -26,19 +26,18 @@
                 let element = mutations[i].target;
                 if (element.getAttribute("gcuielement") == "gcSpread") {
                     let tooltip = element.childNodes[0].childNodes[2];
-                    if (tooltip != null) {
-                        tooltip.remove();
-                    }
+                    if (tooltip != null) tooltip.remove();
                 }
             }
 
             // Check if user has opened a dialog window
-            if (mutations[i].target.getAttribute("class") == null) continue;
-            if (mutations[i].target.getAttribute("class") == "notranslate modal-open") {
-                inDialog = true;
-            }
-            else if (mutations[i].target.getAttribute("class") == "notranslate") {
-                inDialog = false;
+            if (mutations[i].target.hasAttribute("class")) {
+                if (mutations[i].target.getAttribute("class") == "notranslate modal-open") {
+                    inDialog = true;
+                }
+                else if (mutations[i].target.getAttribute("class") == "notranslate") {
+                    inDialog = false;
+                }
             }
         }
     });
